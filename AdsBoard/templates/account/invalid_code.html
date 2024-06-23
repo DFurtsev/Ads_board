@@ -1,0 +1,14 @@
+{% extends "flatpages/default.html" %}
+{% block head_title %}
+    Активация аккаунта
+{% endblock head_title %}
+{% block content %}
+    <div class="text-center mt-4 name">
+        <h1>Активация аккаунта</h1>
+    </div>
+    <h2>Неверный код активации</h2>
+    <form>
+        <input type="button" onclick="history.back();" class="b2"
+            value="Ввести еще раз"/>
+    </form>
+{% endblock content %}

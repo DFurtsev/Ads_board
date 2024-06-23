@@ -1,0 +1,50 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+Responses
+{% endblock title %}
+
+{% block content %}
+    <h1>Отклики</h1>
+    <hr>
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value='Применить' />
+    </form>
+    {% if responses_to_me %}
+    <p>Всего откликов: {{responses_to_me|length}}</p>
+        {% for r in responses_to_me %}
+            <div class="div1">
+                <a href="/ads/{{r.ad.pk}}">{{ r.ad.head}}</a>
+                <p>{{ r.text}}</p>
+                <p>{{ r.user}}</p>
+                <p>{{ r.time}}</p>
+                <form action="" method="post">
+                {% csrf_token %}
+                    <input type="hidden" name="pk" value="{{r.pk}}">
+                    <input type="submit" class="b2" value='Принять' />
+                </form>
+
+                    <button class="b2" onclick="window.location.href = 'http://127.0.0.1:8000/ads/responses/{{r.pk}}/reject';" >Отклонить</button>
+
+            </div>
+        {% endfor %}
+
+        {% if page_obj.has_previous %}
+            <a href="?page=1">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+                <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+        {% endif %}
+        {{ page_obj.number }}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            {% if paginator.num_pages != page_obj.next_page_number %}
+                <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <h2>Нет откликов(</h2>
+    {% endif %}
+
+
+{% endblock content %}

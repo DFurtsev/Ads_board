@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+Ad
+{% endblock title %}
+
+{% block content %}
+        <h1>{{ ad.head }}</h1>
+        <hr>
+        <div class="div1">
+            <p>Автору нужно: {{ad.text|safe}}</p>
+            <p>Категория: {% for category in ad.category.all %}
+                               {{ category.name }}
+                                {% endfor %}
+            </p>
+            <p>Дата публикации: {{ ad.publication_time|date:'M d Y'}}</p>
+            <p>Автор: {{ ad.author }}</p>
+        </div>
+        <div class="div2">
+            {% if user.id == ad.author.id %}
+                <button class="b2" onclick="window.location.href = 'http://127.0.0.1:8000/ads/{{ad.pk}}/edit';" >Редактировать объявление</button>
+            {% else %}
+            <p>Оставьте свой отклик</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="b2" value='Отправить' />
+            </form>
+            {% endif %}
+        </div>
+{% endblock content %}

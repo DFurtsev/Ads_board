@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+{% block content %}
+{% if user.id == ad.author.id %}
+    <h1>Внесите изменения</h1>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ form.media }}
+        <input type="submit" class="b2" value='Готово' />
+    </form>
+{%else%}
+    <h1>Упс...Кажется, вы не можете совершить это действие</h1>
+{%endif%}
+{% endblock content %}

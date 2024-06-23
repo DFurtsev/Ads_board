@@ -1,0 +1,38 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+MyAds
+{% endblock title %}
+
+{% block content %}
+    <h1>Объявления</h1>
+    <hr>
+    {% if myads %}
+    <p>Размещено объявлений: {{myads|length}}</p>
+        {% for ad in myads %}
+            <div class="div1"><a href='/ads/{{ad.pk}}'>{{ ad.head}}</a>
+                <p>{{ ad.text|safe}}</p>
+                <p>{{ ad.publication_time}}</p>
+                {% for category in ad.category.all %}
+                    {{ category.name }}
+                {% endfor %}
+            </div>
+       {% endfor %}
+        {% if page_obj.has_previous %}
+            <a href="?page=1">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+                <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+        {% endif %}
+        {{ page_obj.number }}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            {% if paginator.num_pages != page_obj.next_page_number %}
+                <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <h2>Нет объявлений(</h2>
+    {% endif %}
+
+
+{% endblock content %}

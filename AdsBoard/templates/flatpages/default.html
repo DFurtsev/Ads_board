@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Bare - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        {% load static %}
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <style>
+            body{
+                background: no-repeat;
+                background-size: cover
+                }
+            div{color: #ff9317;}
+            .div1{
+                min-height: 150px;
+                background: #8339bf;
+                margin: 20px auto 50px auto;
+                border-radius: 15px;
+                background-color: #000000d4;
+                padding-top:5px;
+                padding-right: 5px;
+                padding-bottom: 10px;
+                padding-left: 5px;
+                }
+            .div2{
+                width: 250px;
+                height: 170px;
+                background: #8339bf;
+                margin: 20px auto 50px auto;
+                border-radius: 20px;
+                background-color: #000000d4;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                }
+            .b1 {
+                padding: 0.5em 1.5em; /* Поля по вертикали и горизонтали */
+                background-color: transparent; /* Прозрачный цвет фона */
+                font-size: 0.9em; /* Размер текста */
+                text-transform: uppercase; /* Все буквы заглавные */
+                color: #2196f3; /* Цвет текста */
+                border: 2px solid #2196f3; /* Параметры рамки */
+                border-radius: 1.5em; /* Радиус скругления */
+                }
+            .b1:hover {
+                color: #000;
+                background-color: #2196f3;
+                }
+            .b2 {
+                padding: 0.5em 1.5em; /* Поля по вертикали и горизонтали */
+                background-color: #000000d4; /* Прозрачный цвет фона */
+                font-size: 0.9em; /* Размер текста */
+                text-transform: uppercase; /* Все буквы заглавные */
+                color: #ff9317; /* Цвет текста */
+                border: 2px solid #ff9317; /* Параметры рамки */
+                border-radius: 1.5em; /* Радиус скругления */
+                }
+            .b2:hover {
+                color: #000;
+                background-color: #ff9317;
+                }
+        </style>
+    </head>
+    <body id="bg" style="background-image: url('{% static "images/bg.jpg" %}'); background-attachment:fixed" topmargin="0"  >
+        <!-- Responsive navbar-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+                <div class="container">
+                    <a class="navbar-brand" href="/ads/">Главная</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarResponsive"
+                            aria-controls="navbarResponsive" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ads/">Объявления</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ads/create">Подать объявление</a>
+                        </li>
+
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ads/myads">Мои объявления</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ads/responses">Отклики на мои объявления</a>
+                            </li>
+                            <form action="{% url 'account_logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="b1" >Выйти</button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'account_login' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="b1" >Войти</button>
+                            </form>
+                        {% endif %}
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        {% for model in models %}
+            <div class="model-class">
+                {{ model.name }}
+            </div>
+    {% endfor %}
+        <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    {% block content %}
+                    {{ flatpage.content }}
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "allauth/layouts/entrance.html" %}
+{% load allauth %}
+{% block head_title %}
+    Активация аккаунта
+{% endblock head_title %}
+{% block content %}
+    <h1>Введите код активации</h1>
+    <form action="{% url 'confirmation'%}" method="Post">
+        {% csrf_token %}
+        <label>
+            <input class="text" name="code" placeholder="Введите код подтверждения">
+        </label>
+        <input type="submit" value="Подтвердить">
+    </form>
+{% endblock content %}
